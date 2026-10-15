@@ -1,30 +1,41 @@
 import React from "react";
-import "../components/Footer.css";
-import {Link} from 'react-router-dom';
+import { Link } from "react-router-dom";
 
-function Footer(){
-    return(
-    <div className="footer">
-    <div className="footercontainer">
-      <div className="socials">
-        <a href="#HOME"><i className="fab fa-instagram"></i></a>
-        <a href="#HOME"><i className="fab fa-twitter"></i></a>
-        <a href="#HOME"><i className="fab fa-youtube"></i></a>
+function Footer() {
+  return (
+    <footer className="ft">
+      <div className="hazard" aria-hidden="true" />
+      <div className="ft-in">
+        <div className="ft-brand">
+          <h4>
+            <i className="fa-solid fa-helmet-safety" style={{ color: "#ff5040" }} /> BuildIT
+          </h4>
+          <p>
+            A workshop-style PC store. Tested parts, live prices and a guided 7-step builder —
+            so your next computer is built right and priced honest.
+          </p>
+        </div>
+        <div>
+          <h4>SHOP</h4>
+          <Link to="/">Home</Link>
+          <Link to="/build">PC builder</Link>
+          <Link to="/products">Categories</Link>
+          <Link to="/brands">Brands</Link>
+        </div>
+        <div>
+          <h4>HELP</h4>
+          <Link to="/login-page">Login / Register</Link>
+          <a href="https://github.com/Vic204/BuildIT" target="_blank" rel="noreferrer">Source code</a>
+          <a href="#team" onClick={(e) => { e.preventDefault(); alert("Vyshnav\nRohit\nNandu\nAmal"); }}>Our team</a>
+          <a href="#contact" onClick={(e) => { e.preventDefault(); alert("Email us your queries:\nvyshnav.potti@christuniversity.in\nrohit.b@christuniversity.in\namal.k@christuniversity.in\nnandagopal.b@christuniversity.in"); }}>Contact us</a>
+        </div>
       </div>
-      <div className="fnav">
-        <ul>
-          <li><Link to="/">Home</Link></li>
-          <li><a href="#HOME">About</a></li>
-          <li><a href="#HOME" onClick={()=>{alert("Email us your queries in one of the following mails .\nvyshnav.potti@christuniversity.in\nrohit.b@christuniversity.in\namal.k@christuniversity.in\nnandagopal.b@christuniversity.in")}}>Contact Us</a></li>
-          <li><a href="#HOME" onClick={()=>{alert("Vyshnav \nRohit \nNandu \nAmal")}}>Our Team</a></li>
-        </ul>
+      <div className="ft-in ft-bottom">
+        <span>© 2024 BuildIT — measure twice, click once. Brick photography: Wikimedia Commons.</span>
+        <span>White · Green · Black</span>
       </div>
-      <div className="fbottom">
-        <p>Copyright &copy; 2023; Designed by <span className="designer">ravn</span></p>
-      </div>
-    </div>
-    </div>
-    );
+    </footer>
+  );
 }
 
 export default Footer;

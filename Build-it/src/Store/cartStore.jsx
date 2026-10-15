@@ -8,10 +8,10 @@ export const usecartStore = create((set) => ({
       cart: state.cart.filter((product) => product.id !== productid),
     })),
   clearcart: () => set({ cart: [] }),
-  qtysetter: (id, qty) =>
+  qtysetter: (productid, qty) =>
     set((state) => ({
-      cart: state.cart.map((item, index) =>
-        index === id ? { ...item, qty: qty } : item
+      cart: state.cart.map((item) =>
+        item.id === productid || item.cartid === productid ? { ...item, qty } : item
       ),
     })),
 }));

@@ -10,6 +10,7 @@ import Cart from './Pages/Cart';
 import Detail from './Pages/Detail';
 import Filtering from './Pages/Filtering';
 import Checkout from './Pages/checkout';
+import Build from './Pages/Build';
 
 export default function App(){  
   return (
@@ -17,6 +18,7 @@ export default function App(){
       <Route path='/' element={<Home />}/>
       <Route path='/brands' element={<Brands/>}/>
       <Route path='/products' element={<Productpage /> }/>
+      <Route path='/build' element={<Build />}/>
       <Route path='/login-page' element={<Loginpage />}/>
       <Route path='/register-page' element={<Registerpage />}/>
       <Route path='/cart-page/checkout' element={<Checkout />}/>

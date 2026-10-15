@@ -1,150 +1,138 @@
-import React, { useState,useEffect } from 'react';
-import axios from 'axios';
-import '../components/checkoutform.css';
-import Header from '../components/Header';
-import { usecartStore } from '../Store/cartStore';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+import { usecartStore } from "../Store/cartStore";
+import useAuth from "../hooks/useAuth";
+import { useNavigate, Link } from "react-router-dom";
+import { API } from "../api";
+import { Reveal } from "../fx";
+
+const FIELDS = [
+  ["firstName", "First name", "text"],
+  ["lastName", "Last name", "text"],
+  ["mobile", "Mobile", "tel"],
+  ["email", "Email", "email"],
+  ["addressLine1", "Address line 1", "text"],
+  ["addressLine2", "Address line 2", "text"],
+  ["state", "State", "text"],
+  ["country", "Country", "text"],
+];
+
 const CheckoutForm = () => {
-  const [totalprice,settotalprice]= useState(0);
-  const [quantity,setQuantity]=useState(0);
-  const [cartlenth,setCartlenth] = useState(0);
-    const [formData, setFormData] = useState({
-        firstName: '',
-        lastName: '',
-        mobile: '',
-        email: '',
-        addressLine1: '',
-        addressLine2: '',
-        state: '',
-        country: '',
+  const { auth } = useAuth();
+  const navigate = useNavigate();
+  const [totalprice, settotalprice] = useState(0);
+  const [quantity, setQuantity] = useState(0);
+  const [formData, setFormData] = useState(Object.fromEntries(FIELDS.map(([k]) => [k, ""])));
+  const [done, setDone] = useState(null);
+  const [error, setError] = useState("");
+  const [busy, setBusy] = useState(false);
+  const { cart, clearcart } = usecartStore((state) => ({ cart: state.cart, clearcart: state.clearcart }));
+
+  const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+    setBusy(true);
+    try {
+      // Backend expects { userid, formData }
+      const response = await axios.post(`${API}/cart-page/checkout`, {
+        userid: auth?.user?.userId,
+        formData,
       });
-      const { cart,removefromcart,clearcart } = usecartStore((state) => ({
-        cart:state.cart,
-        removefromcart:state.removefromcart,
-        clearcart:state.clearcart
-    }));
-      const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
-      };
-    
-      const handleSubmit = async (e) => {
-        e.preventDefault();
-        console.log(formData);
-        try {
-          const response = await axios.post('http://localhost:5000/cart-page/checkout', formData);
-          console.log(response.data); // Handle successful response
-        } catch (error) {
-          console.error(error); // Handle error
-        }
-      };
-      useEffect(() => {
-        setCartlenth(cart.length);
-        let totalprice=0;
-        let quantity =0;
-        cart.forEach(item => {
-            totalprice += parseInt(item.price)*parseInt(item.qty);
-            quantity += item.qty;
-        });
-        settotalprice(totalprice);
-        setQuantity(quantity);
-    }, [cart]);
-   
+      setDone(response.data);
+      clearcart();
+    } catch (err) {
+      setError(err.response?.data?.message || "Checkout failed. Is the server running?");
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  useEffect(() => {
+    let total = 0;
+    let qty = 0;
+    cart.forEach((item) => {
+      total += (parseFloat(item.price) || 0) * (parseInt(item.qty) || 0);
+      qty += parseInt(item.qty) || 0;
+    });
+    settotalprice(total);
+    setQuantity(qty);
+  }, [cart]);
+
+  const payable = totalprice + 500 - 200 * quantity;
+
+  if (!auth?.user) {
+    return (
+      <>
+        <Header />
+        <div className="wrap">
+          <div className="empty">
+            <i className="fa-solid fa-lock" />
+            <h3>Identification required</h3>
+            <p>Please sign in to place your order.</p>
+            <Link to="/login-page" className="btn btn-solid" style={{ marginTop: 16 }}>Login / Register</Link>
+          </div>
+        </div>
+        <Footer />
+      </>
+    );
+  }
+
   return (
-    <> 
-    <Header />
-    <div className="checkout-form">  
-    <form onSubmit={handleSubmit}>
-    <h2 className='maincontainerheader'>CHECKOUT</h2>
-    <hr  className='maincontainerheader-line'/>
-      <div>
-      <label>
-        FIRSTNAME
-        <input
-          type="text"
-          name="firstName"
-          value={formData.firstName}
-          onChange={handleChange}
-        />
-      </label>
-      <label>
-        LASTNAME
-        <input
-          type="text"
-          name="lastName"
-          value={formData.lastName}
-          onChange={handleChange}
-        />
-      </label>
-      <label>
-        MOBILE
-        <input
-          type="tel"
-          name="mobile"
-          value={formData.mobile}
-          onChange={handleChange}
-        />
-      </label>
-      <label>
-        EMAIL
-        <input
-          type="email"
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
-        />
-      </label>
-      <label>
-        ADRESS LINE 1
-        <input
-          type="text"
-          name="addressLine1"
-          value={formData.addressLine1}
-          onChange={handleChange}
-        />
-      </label>
-      <label>
-        ADRESS LINE 2
-        <input
-          type="text"
-          name="addressLine2"
-          value={formData.addressLine2}
-          onChange={handleChange}
-        />
-      </label>
-      <label>
-        STATE
-        <input
-          type="text"
-          name="state"
-          value={formData.state}
-          onChange={handleChange}
-        />
-      </label>
-      <label>
-        COUNTRY
-        <input
-          type="text"
-          name="country"
-          value={formData.country}
-          onChange={handleChange}
-        />
-      </label>
-      <button type="submit" className='checkout-button'>PROCEED TO PAY</button>
+    <>
+      <Header />
+      <div className="wrap">
+        <Reveal>
+          <div className="sec-head">
+            <div>
+              <div className="eyebrow">Almost done</div>
+              <h2>Check<em style={{ color: "#c23a24", fontStyle: "normal" }}>out</em></h2>
+            </div>
+          </div>
+        </Reveal>
+        {done ? (
+          <div className="empty">
+            <i className="fa-solid fa-circle-check" />
+            <h3>Order placed!</h3>
+            <p>{done.message} — {done.count} items ordered. Your cart has been cleared.</p>
+          </div>
+        ) : (
+          <div className="co-grid">
+            <Reveal>
+              <form onSubmit={handleSubmit} className="co-form">
+                <h2>Delivery details</h2>
+                <div className="co-2">
+                  {FIELDS.map(([name, label, type]) => (
+                    <div className="field" key={name}>
+                      <label htmlFor={name}>{label.toUpperCase()}</label>
+                      <input type={type} name={name} id={name} value={formData[name]} onChange={handleChange} required />
+                    </div>
+                  ))}
+                </div>
+                <button type="submit" className="btn btn-solid btn-block" disabled={busy}>
+                  {busy ? "Placing order…" : <>Pay ₹{payable.toLocaleString("en-IN")} <i className="fa-solid fa-arrow-right" /></>}
+                </button>
+                {error && <p className="form-err">{error}</p>}
+              </form>
+            </Reveal>
+            <Reveal delay={120}>
+              <div className="summary">
+                <h3>CART SUMMARY</h3>
+                <div className="row"><span>Items</span><span>{quantity}</span></div>
+                <div className="row"><span>Price</span><span>₹{(totalprice + 200 * quantity).toLocaleString("en-IN")}</span></div>
+                <div className="row"><span>Tax</span><span>₹500</span></div>
+                <div className="row"><span>Bundle discount</span><span>− ₹{(200 * quantity).toLocaleString("en-IN")}</span></div>
+                <div className="row total"><span>Payable</span><b>₹{payable.toLocaleString("en-IN")}</b></div>
+              </div>
+            </Reveal>
+          </div>
+        )}
       </div>
-  
-    </form>
-    <div className="cart-summary">
-        <h3 className='cartsumm'>CART SUMMARY</h3>
-        <hr className='checkoutline' />    
-        <p>ITEMS: {quantity}</p>
-        <p>PRICE:₹ {totalprice+200*quantity} </p>
-        <p>TAX:₹ 500</p>
-        <p>DISCOUNT:₹ {200*quantity}</p>
-        <p>PAYABLE:₹ {totalprice+500}</p>
-       
-      </div>
-      
-  </div></>
-   
+      <Footer />
+    </>
   );
 };
 

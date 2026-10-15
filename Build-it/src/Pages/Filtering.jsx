@@ -3,58 +3,77 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { useParams, useLocation } from "react-router-dom";
 import Profile from "../components/Profile";
-import '../components/filteringchoice.css';
 import axios from "axios";
+import { API } from "../api";
+import { Reveal } from "../fx";
 
 export default function CategoryPage() {
-    const [filter,setfilter]=useState('hightolow');
-    const [productset, setProductset] = useState([]);
-    const { category, brandname } = useParams();
-    const location = useLocation();
-    const { pathname } = location;
+  const [filter, setfilter] = useState("hightolow");
+  const [productset, setProductset] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const { category, brandname } = useParams();
+  const location = useLocation();
+  const { pathname } = location;
+  const title = category ? category.toUpperCase() : brandname ? brandname.toUpperCase() : "NOT FOUND";
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                let response;
-                if (category) {
-                    response = await axios.get(`http://localhost:5000/products/${category}`,{params: {filter}});
-                } else if (brandname) {
-                    response = await axios.get(`http://localhost:5000/brands/${brandname}`,{params: {filter}});
-                }
-                if (response.status === 200) {
-                    console.log(response.data);
-                    setProductset(response.data);
-                }
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            }
-        };
+  useEffect(() => {
+    let alive = true;
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        let response;
+        if (category) {
+          response = await axios.get(`${API}/products/${category}`, { params: { filter } });
+        } else if (brandname) {
+          response = await axios.get(`${API}/brands/${brandname}`, { params: { filter } });
+        }
+        if (alive && response?.status === 200) setProductset(response.data);
+      } catch {
+        if (alive) setProductset([]);
+      } finally {
+        if (alive) setLoading(false);
+      }
+    };
+    fetchData();
+    return () => {
+      alive = false;
+    };
+  }, [category, brandname, filter]);
 
-        fetchData();
-    }, [category, brandname,filter]);
-
-    return (
-        <div>
-            <Header />
-            <div className="Page-container">
-                <div className="heading">
-                    <h1 id="page-header">{category ? category.toUpperCase() : brandname ? brandname.toUpperCase() : 'Not Found'}</h1>
-                    <p id="itemsno">{productset.length} items</p>
-                </div>
-                <hr className="linedesign"/>
-
-                <div className="filteringchoice">
-                    <select onChange={e => setfilter(e.target.value)}>
-                        <option value="hightolow">High to Low</option>
-                        <option value="lowtohigh" >Low to High</option>
-                </select>
-
-                </div>
-
-                <Profile list={productset} url={pathname} identifier='id' />
+  return (
+    <div>
+      <Header />
+      <div className="wrap">
+        <Reveal>
+          <div className="sec-head">
+            <div>
+              <div className="eyebrow">{category ? "Category" : "Brand"}</div>
+              <h2>{title.replace(/_/g, " ").toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase())}</h2>
             </div>
-            <Footer />
-        </div>
-    );
+            <div className="filterbar">
+              <span className="count-badge">
+                <i className="fa-solid fa-microchip" /> {productset.length} products
+              </span>
+              <select value={filter} onChange={(e) => setfilter(e.target.value)} aria-label="Sort by price">
+                <option value="hightolow">Price: high → low</option>
+                <option value="lowtohigh">Price: low → high</option>
+              </select>
+            </div>
+          </div>
+        </Reveal>
+        {loading ? (
+          <div className="skel">Loading products…</div>
+        ) : productset.length === 0 ? (
+          <div className="empty">
+            <i className="fa-solid fa-box-open" />
+            <h3>Nothing here yet</h3>
+            <p>This shelf is empty in the store database. Run <code>npm run seed</code> on the server, or try another category.</p>
+          </div>
+        ) : (
+          <Profile list={productset} url={pathname} identifier="id" />
+        )}
+      </div>
+      <Footer />
+    </div>
+  );
 }

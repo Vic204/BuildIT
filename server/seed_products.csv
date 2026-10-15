@@ -1,0 +1,53 @@
+name|imageurl|price|brand|category|details|watts
+Intel Core i9-11900K|https://pcper.com/wp-content/uploads/2018/04/c808-dsc04805-scaled.jpg|15000|intel|processors|8 cores 16 threads up to 5.3GHz [LGA1200] — flagship gaming silicon|125
+AMD Ryzen 9 5950X|https://pcper.com/wp-content/uploads/2018/04/c808-dsc04805-scaled.jpg|15000|amd|processors|16 cores 32 threads [AM4] — multi-threaded monster|105
+Intel Core i7-11700K|https://pcper.com/wp-content/uploads/2018/04/c808-dsc04805-scaled.jpg|15000|intel|processors|8 cores 16 threads [LGA1200] — sweet spot for high-FPS builds|125
+AMD Ryzen 7 5800X|https://pcper.com/wp-content/uploads/2018/04/c808-dsc04805-scaled.jpg|15000|amd|processors|8 cores 16 threads [AM4] — esports favourite|105
+Intel Core i5-11600K|https://pcper.com/wp-content/uploads/2018/04/c808-dsc04805-scaled.jpg|15000|intel|processors|6 cores 12 threads [LGA1200] — budget 1080p slayer|125
+AMD Ryzen 5 5600X|https://pcper.com/wp-content/uploads/2018/04/c808-dsc04805-scaled.jpg|15000|amd|processors|6 cores 12 threads [AM4] — legendary value pick|65
+NVIDIA GeForce RTX 3090|https://dlcdnwebimgs.asus.com/gain/CD41F925-4CD0-4D43-8722-0BBA1953E46D/w717/h525|15000|nvidia|graphicscards|24GB GDDR6X — 4K ultra without mercy|350
+NVIDIA GeForce RTX 3080|https://dlcdnwebimgs.asus.com/gain/CD41F925-4CD0-4D43-8722-0BBA1953E46D/w717/h525|15000|nvidia|graphicscards|10GB GDDR6X — 1440p high-refresh king|320
+NVIDIA GeForce RTX 3070|https://dlcdnwebimgs.asus.com/gain/CD41F925-4CD0-4D43-8722-0BBA1953E46D/w717/h525|15000|nvidia|graphicscards|8GB GDDR6 — 1440p sweet spot|220
+NVIDIA GeForce RTX 3060 Ti|https://dlcdnwebimgs.asus.com/gain/CD41F925-4CD0-4D43-8722-0BBA1953E46D/w717/h525|15000|nvidia|graphicscards|8GB GDDR6 — 1080p ultra bargain|200
+AMD Radeon RX 6900 XT|https://dlcdnwebimgs.asus.com/gain/CD41F925-4CD0-4D43-8722-0BBA1953E46D/w717/h525|15000|amd|graphicscards|16GB GDDR6 — rasterization brute|300
+AMD Radeon RX 6800 XT|https://dlcdnwebimgs.asus.com/gain/CD41F925-4CD0-4D43-8722-0BBA1953E46D/w717/h525|15000|amd|graphicscards|16GB GDDR6 — 1440p/4K hybrid|300
+AMD Radeon RX 6700 XT|https://dlcdnwebimgs.asus.com/gain/CD41F925-4CD0-4D43-8722-0BBA1953E46D/w717/h525|15000|amd|graphicscards|12GB GDDR6 — 1440p value hunter|230
+ASUS ROG Strix Z590-E Gaming|https://zakelijk.alternate.nl/p/1200x630/5/0/MSI_B650_GAMING_PLUS_WIFI_socket_AM5_moederbord@@1919705_1.jpg|18500|asus|motherboard|ATX [LGA1200] WiFi 6E — Intel command deck|0
+MSI MAG B550 Tomahawk|https://zakelijk.alternate.nl/p/1200x630/5/0/MSI_B650_GAMING_PLUS_WIFI_socket_AM5_moederbord@@1919705_1.jpg|14500|msi|motherboard|ATX [AM4] — rock-solid AMD base|0
+Gigabyte B550 AORUS Elite|https://zakelijk.alternate.nl/p/1200x630/5/0/MSI_B650_GAMING_PLUS_WIFI_socket_AM5_moederbord@@1919705_1.jpg|13200|gigabyte|motherboard|ATX [AM4] — clean VRMs for overclocks|0
+ASUS TUF Gaming B450-Plus II|https://zakelijk.alternate.nl/p/1200x630/5/0/MSI_B650_GAMING_PLUS_WIFI_socket_AM5_moederbord@@1919705_1.jpg|9800|asus|motherboard|ATX [AM4] military-grade — budget AMD fortress|0
+MSI MPG Z590 Gaming Plus|https://zakelijk.alternate.nl/p/1200x630/5/0/MSI_B650_GAMING_PLUS_WIFI_socket_AM5_moederbord@@1919705_1.jpg|15900|msi|motherboard|ATX [LGA1200] — Intel mid-tower general|0
+Corsair Vengeance LPX 16GB|https://assets.corsair.com/image/upload/f_auto,q_auto/v1/akamai/pdp/vengeance-rgb-pro/Content/Vengeance_RGB_Pro_PDP_Black_04.png|6800|corsair|ram|DDR4 3200MHz CL16 — low-profile sprinter|0
+Corsair Vengeance RGB Pro 32GB|https://assets.corsair.com/image/upload/f_auto,q_auto/v1/akamai/pdp/vengeance-rgb-pro/Content/Vengeance_RGB_Pro_PDP_Black_04.png|11500|corsair|ram|DDR4 3600MHz RGB — glow while you frag|0
+G.Skill Trident Z5 RGB 32GB|https://content.crucial.com/content/dam/crucial/dram-products/ddr5-pro/images/product/crucial-ddr5-pro-udimm-kit-front.psd.transform/medium-png/image.png|12900|gskill|ram|DDR5 6000MHz — next-gen bandwidth|0
+G.Skill Trident Z5 Neo RGB 32GB|https://content.crucial.com/content/dam/crucial/dram-products/ddr5-pro/images/product/crucial-ddr5-pro-udimm-kit-front.psd.transform/medium-png/image.png|12400|gskill|ram|DDR5 6000MHz AMD EXPO — tuned for Ryzen|0
+TEAMGROUP T-Force Delta RGB 32GB|https://assets.corsair.com/image/upload/f_auto,q_auto/v1/akamai/pdp/vengeance-rgb-pro/Content/Vengeance_RGB_Pro_PDP_Black_04.png|8900|corsair|ram|DDR4 3600MHz RGB — arena lighting included|0
+Samsung 980 Pro 1TB|https://content.crucial.com/content/dam/crucial/dram-products/ddr5-pro/images/product/crucial-ddr5-pro-udimm-kit-front.psd.transform/medium-png/image.png|9500|samsung|storage|NVMe Gen4 7000MB/s — maps load before you blink|0
+WD Black SN850X 1TB|https://content.crucial.com/content/dam/crucial/dram-products/ddr5-pro/images/product/crucial-ddr5-pro-udimm-kit-front.psd.transform/medium-png/image.png|9200|wd|storage|NVMe Gen4 7300MB/s — built for DirectStorage|0
+Crucial P3 500GB|https://content.crucial.com/content/dam/crucial/dram-products/ddr5-pro/images/product/crucial-ddr5-pro-udimm-kit-front.psd.transform/medium-png/image.png|4200|crucial|storage|NVMe Gen3 — cheap fast bulk for your library|0
+Samsung 870 EVO 1TB|https://content.crucial.com/content/dam/crucial/dram-products/ddr5-pro/images/product/crucial-ddr5-pro-udimm-kit-front.psd.transform/medium-png/image.png|7800|samsung|storage|SATA 2.5 inch — reliable vault drive|0
+Corsair RM750x 750W|https://e7.pngegg.com/pngimages/405/611/png-clipart-power-supply-unit-power-converters-atx-gigabyte-technology-80-plus-psu-electronic-device-computer-hardware.png|9800|corsair|psu|80+ Gold fully modular [750W] — silent guardian|750
+EVGA SuperNOVA 850W|https://e7.pngegg.com/pngimages/405/611/png-clipart-power-supply-unit-power-converters-atx-gigabyte-technology-80-plus-psu-electronic-device-computer-hardware.png|11500|evga|psu|80+ Gold fully modular [850W] — feeds hungry flagships|850
+Cooler Master MWE 650W|https://e7.pngegg.com/pngimages/405/611/png-clipart-power-supply-unit-power-converters-atx-gigabyte-technology-80-plus-psu-electronic-device-computer-hardware.png|6400|coolermaster|psu|80+ Bronze [650W] — honest budget juice|650
+Corsair CX550M 550W|https://e7.pngegg.com/pngimages/405/611/png-clipart-power-supply-unit-power-converters-atx-gigabyte-technology-80-plus-psu-electronic-device-computer-hardware.png|5200|corsair|psu|80+ Bronze semi-modular [550W] — starter current|550
+Cooler Master ML240L V2|https://m.media-amazon.com/images/I/61i9iqYEEbL._SX522_.jpg|7500|coolermaster|cooling|240mm ARGB liquid — keeps boost clocks frosty|0
+NZXT Kraken 240|https://m.media-amazon.com/images/I/61i9iqYEEbL._SX522_.jpg|12900|nzxt|cooling|240mm LCD liquid — cold and quiet flex|0
+Deepcool AK400|https://m.media-amazon.com/images/I/61i9iqYEEbL._SX522_.jpg|2800|deepcool|cooling|Tower air cooler — zero-maintenance chill|0
+NZXT H5 Flow|https://www.montechpc.com/Upload/product/product_d_202310301103572.png|8400|nzxt|case|Mid-tower mesh — airflow-first battlestation|0
+Montech Air 100|https://www.montechpc.com/Upload/product/product_d_202310301103572.png|5900|montech|case|Micro-ATX mesh — compact raider|0
+Corsair 4000D Airflow|https://www.montechpc.com/Upload/product/product_d_202310301103572.png|9200|corsair|case|Mid-tower — the people's champion chassis|0
+Razer BlackShark V2|https://e7.pngegg.com/pngimages/833/918/png-clipart-kingston-hyperx-cloud-ii-headset-7-1-surround-sound-headphones-headphones-electronics-cloud.png|8900|razer|headphone|THX spatial — hear footsteps first|0
+HyperX Cloud II|https://e7.pngegg.com/pngimages/833/918/png-clipart-kingston-hyperx-cloud-ii-headset-7-1-surround-sound-headphones-headphones-electronics-cloud.png|7400|hyperx|headphone|7.1 surround — tournament staple|0
+Logitech G435|https://e7.pngegg.com/pngimages/833/918/png-clipart-kingston-hyperx-cloud-ii-headset-7-1-surround-sound-headphones-headphones-electronics-cloud.png|5800|logitech|headphone|Lightspeed wireless — featherweight comms|0
+Razer Huntsman Mini|https://m.media-amazon.com/images/I/71hrbNjKqhL._AC_SL1500_.jpg|9200|razer|keyboard|Optical switches 60 percent — faster than human|0
+Logitech G Pro X|https://m.media-amazon.com/images/I/71hrbNjKqhL._AC_SL1500_.jpg|11500|logitech|keyboard|Hot-swap TKL — pro-circuit standard|0
+Redragon K552|https://m.media-amazon.com/images/I/71hrbNjKqhL._AC_SL1500_.jpg|3200|redragon|keyboard|Mechanical TKL — best budget trigger|0
+Razer DeathAdder V3|https://www.vhv.rs/dpng/d/460-4603856_gaming-mouse-png-transparent-png.png|5900|razer|mouse|59g esports shape — aimbot-adjacent|0
+Logitech G502 Hero|https://www.vhv.rs/dpng/d/460-4603856_gaming-mouse-png-transparent-png.png|4200|logitech|mouse|25K sensor — the legend continues|0
+Samsung Odyssey G5 27|https://images.samsung.com/is/image/samsung/p6pim/my/ls57cg952nexxs/gallery/my-odyssey-neo-g9-g95nc-ls57cg952nexxs-537965891?$650_519_PNG$|22500|samsung|monitor|165Hz QHD curved — see around corners|0
+LG UltraGear 27|https://images.samsung.com/is/image/samsung/p6pim/my/ls57cg952nexxs/gallery/my-odyssey-neo-g9-g95nc-ls57cg952nexxs-537965891?$650_519_PNG$|24900|lg|monitor|165Hz IPS — colour-accurate carnage|0
+MSI Optix G241|https://images.samsung.com/is/image/samsung/p6pim/my/ls57cg952nexxs/gallery/my-odyssey-neo-g9-g95nc-ls57cg952nexxs-537965891?$650_519_PNG$|14900|msi|monitor|144Hz IPS — entry to high-refresh|0
+Creative Pebble V3|https://www.bhphotovideo.com/images/images1000x1000/creative_labs_51mf1680aa000_pebble_2_0_speakers_usb_1434945.jpg|3800|creative|speaker|USB-C minimal — desk-friendly rumble|0
+Logitech Z407|https://www.bhphotovideo.com/images/images1000x1000/creative_labs_51mf1680aa000_pebble_2_0_speakers_usb_1434945.jpg|8900|logitech|speaker|Wireless control dial — room-filling loot|0
+APC Back-UPS 1100VA|https://www.rackyrax.com/23551-thickbox_default/tripp-lite-smx1500lcdt-uninterruptible-power-supply-ups.jpg|7200|apc|ups|Line-interactive — ranked grind never dies to blackouts|0
+Tripp Lite 1500VA|https://www.rackyrax.com/23551-thickbox_default/tripp-lite-smx1500lcdt-uninterruptible-power-supply-ups.jpg|9800|tripplite|ups|LCD display — bunker-grade backup|0

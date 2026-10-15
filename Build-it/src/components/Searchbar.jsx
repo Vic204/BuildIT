@@ -1,66 +1,52 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
-import '../components/searchbar.css';
 import { Link } from "react-router-dom";
+import { API } from "../api";
 
 export default function Searchbar() {
-    const [search, setSearch] = useState('');
-    const [product, setProduct] = useState([]);
-    const [showMenu, setShowMenu] = useState(false); // State to control menu visibility
-    
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await axios.get('http://localhost:5000/',{params: {search}});
-                if (response.status === 200) {
-                    console.log(response.data);
-                    setProduct(response.data);
-                }
-            } catch (err) {
-                console.log(err);
-            }
-        };
+  const [search, setSearch] = useState("");
+  const [product, setProduct] = useState([]);
+  const [showMenu, setShowMenu] = useState(false);
 
-        if (search !== '') { // Check if search query is not empty
-            fetchData();
-        } else {
-            // If search query is empty, reset the product state
-            setProduct([]);
-        }
-    }, [search]); // Trigger useEffect on search state change
-     
-    const filteredproducts = product.map(item => (
-        <li key={item.id}>
-            <Link to={`/products/${item.category}/${item.id}`}>
-                {item.name}
-            </Link>
-        </li>
-    ));
+  useEffect(() => {
+    if (search === "") {
+      setProduct([]);
+      return;
+    }
+    const t = setTimeout(async () => {
+      try {
+        const response = await axios.get(`${API}/`, { params: { search } });
+        if (response.status === 200) setProduct(response.data);
+      } catch {
+        setProduct([]);
+      }
+    }, 280);
+    return () => clearTimeout(t);
+  }, [search]);
 
-    return (
-        <div className="searchbar-container">
-            <form className="searchbar-form">
-                <input
-                    className="searchbar-input"
-                    value={search}
-                    type="text"
-                    placeholder="Search..."
-                    onChange={(e) => { setSearch(e.target.value) }}
-                    onFocus={() => setShowMenu(true)} // Show menu on input focus
-                    onBlur={() => setShowMenu(false)} // Hide menu on input blur
-                />
-                {/* <button className="searchbar-button">
-                    <i className="fa-solid fa-magnifying-glass"></i>
-                </button> */}
-                {showMenu && ( // Render the menu if showMenu is true
-                    <div className="dropdown-menu">
-                        {/* Dropdown menu content */}
-                        <ul>   
-                        {filteredproducts}
-                        </ul>
-                    </div>
-                )}
-            </form>
+  return (
+    <div className="search-wrap">
+      <i className="fa-solid fa-magnifying-glass sb-icon" />
+      <input
+        className="sb-input"
+        value={search}
+        type="text"
+        placeholder="Search parts…"
+        onChange={(e) => setSearch(e.target.value)}
+        onFocus={() => setShowMenu(true)}
+        onBlur={() => setTimeout(() => setShowMenu(false), 150)}
+      />
+      {showMenu && product.length > 0 && (
+        <div className="sb-drop">
+          <ul>
+            {product.map((item) => (
+              <li key={item.id}>
+                <Link to={`/products/${item.category}/${item.id}`}>{item.name}</Link>
+              </li>
+            ))}
+          </ul>
         </div>
-    );
+      )}
+    </div>
+  );
 }

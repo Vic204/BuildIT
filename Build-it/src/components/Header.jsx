@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
-import "../components/Header.css";
 import { Link, useNavigate } from "react-router-dom";
 import Searchbar from "./Searchbar";
 import { usecartStore } from "../Store/cartStore";
 import useAuth from "../hooks/useAuth";
-import logo from  "C:/Users/vyshn/OneDrive/Pictures/logo.png"
+import { ScrollProgress, Magnetic } from "../fx";
 
 function Header() {
   const { auth, setAuth } = useAuth();
@@ -14,68 +13,61 @@ function Header() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Update cart length dynamically whenever cart changes
     setCartLength(cart.length);
-  }, [cart,]); // Include cart in dependency array
+  }, [cart]);
+
   const handlelogout = () => {
     setAuth(null);
+    setShowdropdown(false);
     navigate("/");
   };
+
   return (
-    <div className="header-container">
-      <div className="topnavbar">
-        <div className="Logo-container">
-          <Link to="/" className="hlinking">
-            <img src={logo} alt="LOGO" />
+    <>
+      <ScrollProgress />
+      <header className="hd">
+        <div className="hd-in">
+          <Link to="/" className="brand">
+            <span className="brand-mark">
+              <i className="fa-solid fa-helmet-safety" />
+            </span>
+            <span>
+              BuildIT<small>YES, WE CAN</small>
+            </span>
           </Link>
-        </div>
-        <Searchbar />
-        <div className="top-nav-right">
-          {auth?.user ? (
-            <div className="userProfile">
-              <button className="userpro"
-                type="button"
-                onClick={() => {
-                  setShowdropdown(!showdropdown);
-                }}
-              >
-                {auth.user.username}
-              </button>
-              <div className="logoutcontainer">
+          <nav className="nav">
+            <Link to="/build">Build your own</Link>
+            <Link to="/products">Categories</Link>
+            <Link to="/brands">Brands</Link>
+          </nav>
+          <div className="hd-right">
+            <Searchbar />
+            {auth?.user ? (
+              <div className="search-wrap">
+                <button className="user-chip" type="button" onClick={() => setShowdropdown((s) => !s)}>
+                  <i className="fa-solid fa-circle-user" /> {auth.user.username}
+                </button>
                 {showdropdown && (
-                  <div>
-                    <button className='logout' onClick={handlelogout}>LOG OUT</button>
+                  <div className="logout-pop">
+                    <button onClick={handlelogout}>Log out</button>
                   </div>
                 )}
               </div>
-            </div>
-          ) : (
-            <Link to="/Login-page">
-              <i className="fa-solid fa-user"></i> Login/Register
-            </Link>
-          )}
-          <>
-            {auth?.user ? (
-              <>
-                <Link to={`/cart-page/${auth?.user?.userId}`} className="cartbutton">Cart</Link>
-                <p className="Cart-length">{cartLength}</p>
-              </>
             ) : (
-              <Link to={"/login-page"}>Cart</Link>
+              <Link to="/login-page" className="btn-ghost-lt">
+                Login / Register
+              </Link>
             )}
-          </>
+            <Magnetic>
+              <Link to={auth?.user ? `/cart-page/${auth.user.userId}` : "/login-page"} className="cart-btn">
+                <i className="fa-solid fa-cart-shopping" /> Cart
+                <span className="cart-count" key={cartLength}>{cartLength}</span>
+              </Link>
+            </Magnetic>
+          </div>
         </div>
-      </div>
-      <div className="main-nav">
-        <div className="main-nav-content">
-         
-          <Link to="/brands">BRANDS</Link>
-          <Link to="/products">CATEGORIES</Link>
-          <Link to="/products">BUILD</Link>
-    
-        </div>
-      </div>
-    </div>
+      </header>
+    </>
   );
 }
 export default Header;

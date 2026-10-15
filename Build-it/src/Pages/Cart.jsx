@@ -1,114 +1,110 @@
 import React, { useEffect, useState } from "react";
-import Header from '../components/Header.jsx';
-import Footer from '../components/Footer.jsx';
-import CartItem from '../components/cartitem.jsx';
+import Header from "../components/Header.jsx";
+import Footer from "../components/Footer.jsx";
+import CartItem from "../components/cartitem.jsx";
 import axios from "axios";
 import useAuth from "../hooks/useAuth.jsx";
-import "../components/cart.css"
 import { Link } from "react-router-dom";
-
 import { usecartStore } from "../Store/cartStore.jsx";
-
+import { API } from "../api";
+import { Reveal } from "../fx";
 
 export default function Cart() {
-    const {auth} = useAuth();
-    const [totalprice,settotalprice]= useState(0);
-    const [quantity,setQuantity]=useState(0);
-    const [cartlenth,setCartlenth] = useState(0);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-    const { cart,removefromcart,clearcart } = usecartStore((state) => ({
-        cart:state.cart,
-        removefromcart:state.removefromcart,
-        clearcart:state.clearcart
-    }));
+  const { auth } = useAuth();
+  const [totalprice, settotalprice] = useState(0);
+  const [quantity, setQuantity] = useState(0);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const { cart } = usecartStore((state) => ({ cart: state.cart }));
 
-    const userid=auth?.user ?.userId;
-    console.log(userid);
-    // const clearing=()=>{
-    //     useEffect(()=>{
-    //         const deleteing=async() =>{
-    //             try{
-    //                 await axios.delete('http://localhost:5000/cart');
-    //                 setCartlenth(0);
-    //                 clearcart();
-    //             }catch(err){
-    //                 console.log(err);
-    //             }
-    //         }
-    //     })
-    // }
+  const userid = auth?.user?.userId;
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await axios.get(`http://localhost:5000/cart-page/${userid}`);
-                if (response.status === 200) {
+  useEffect(() => {
+    let alive = true;
+    const fetchData = async () => {
+      if (!userid) {
+        setLoading(false);
+        return;
+      }
+      try {
+        const response = await axios.get(`${API}/cart-page/${userid}`);
+        if (alive && response.status === 200) {
+          usecartStore.setState({ cart: response.data });
+        }
+      } catch {
+        if (alive) setError("Could not load your cart. Is the server running?");
+      } finally {
+        if (alive) setLoading(false);
+      }
+    };
+    fetchData();
+    return () => {
+      alive = false;
+    };
+  }, [userid]);
 
-                    setCartlenth(response.data.length);
-                    usecartStore.setState({cart: response.data});
-                }
-            } catch (error) {
-                console.error('Error fetching data:', error);
-                setError('Error fetching data. Please try again later.');
-            } finally {
-                setLoading(false);
-            }
-        };
+  useEffect(() => {
+    let total = 0;
+    let qty = 0;
+    cart.forEach((item) => {
+      total += (parseFloat(item.price) || 0) * (parseInt(item.qty) || 0);
+      qty += parseInt(item.qty) || 0;
+    });
+    settotalprice(total);
+    setQuantity(qty);
+  }, [cart]);
 
-        fetchData();
-    }, []);
-
-    let products = null;
-
-    if (loading) {
-        products = <p>Loading...</p>;
-    } else if (error) {
-        products = <p>{error}</p>;
-    } else {
-        products = cart.map(item => (
-            <li key={item.cartid}><CartItem product={item} /></li>
-        ));
-    }
-
-
-    useEffect(() => {
-        setCartlenth(cart.length);
-        let totalprice=0;
-        let quantity =0;
-        cart.forEach(item => {
-            totalprice += parseInt(item.price)*parseInt(item.qty);
-            quantity += item.qty;
-        });
-        settotalprice(totalprice);
-        setQuantity(quantity);
-    }, [cart]);
-
-    return (
-        <>
-            <Header />
-            <div className="Page-container">
-                <div className="heading">
-                    <h1 id="page-header">CART</h1>
-                    <p id="itemsno">{cartlenth} items</p>
-                </div>
-                <hr className="line"/>
-                <div className='items-container'>
-                    <ul>{products}</ul>
-                    {/* <button onClick={clearcart}>Clear Cart</button> */}
-                </div>
-            </div>
+  return (
+    <>
+      <Header />
+      <div className="wrap">
+        <Reveal>
+          <div className="sec-head">
             <div>
-                <div className="total-header"><h3>CART TOTALS</h3></div>
-                <div className="carttotal-details">
-                    <p>NUMBERS : {quantity}</p>
-                    <p>TOTAL :₹ {totalprice}</p>
-                    <div className="buttonwrapper">
-                        <Link to='/cart-page/checkout'><button className="checkout-button">PROCEED TO CHECKOUT</button></Link>
-                        </div>
-                </div>
+              <div className="eyebrow">Your cart</div>
+              <h2>Cart <i>({cart.length})</i></h2>
             </div>
-            <Footer />
-        </>
-    );
+          </div>
+        </Reveal>
+        {loading ? (
+          <div className="skel">Loading your cart…</div>
+        ) : error ? (
+          <div className="empty"><h3>Cart unreachable</h3><p>{error}</p></div>
+        ) : cart.length === 0 ? (
+          <div className="empty">
+            <i className="fa-solid fa-box-open" />
+            <h3>Your cart is empty</h3>
+            <p>Add your first part — or build a full PC in the guided builder.</p>
+            <div style={{ display: "flex", gap: 12, justifyContent: "center", marginTop: 16, flexWrap: "wrap" }}>
+              <Link to="/build" className="btn btn-solid">Build your own PC</Link>
+              <Link to="/products" className="btn btn-line" style={{ color: "#100c0b", borderColor: "#100c0b" }}>Browse parts</Link>
+            </div>
+          </div>
+        ) : (
+          <div className="cart-grid">
+            <div>
+              {cart.map((item) => (
+                <CartItem key={item.cartid ?? item.id} product={item} />
+              ))}
+            </div>
+            <div className="summary">
+              <h3>CART TOTALS</h3>
+              <div className="row"><span>Items</span><span>{quantity}</span></div>
+              <div className="row"><span>Subtotal</span><span>₹{totalprice.toLocaleString("en-IN")}</span></div>
+              <div className="row"><span>Shipping</span><span>{totalprice > 5000 ? "Free" : "₹200"}</span></div>
+              <div className="row total"><span>Payable</span><b>₹{(totalprice + (totalprice > 5000 ? 0 : 200)).toLocaleString("en-IN")}</b></div>
+              <Link
+                to="/cart-page/checkout"
+                className="btn btn-solid btn-block"
+                style={{ marginTop: 20, background: "#ff5040" }}
+              >
+                Proceed to checkout <i className="fa-solid fa-arrow-right" />
+              </Link>
+            </div>
+          </div>
+        )}
+      </div>
+      <Footer />
+    </>
+  );
 }
